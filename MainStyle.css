@@ -1,30 +1,44 @@
 ﻿body {
     text-align: center;
-    margin-top:0px;
+    margin:0;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-size: cover;
+
+}
+#flames{
+    background-image: url("images/rink_background.jpg");
+}
+#index{
+    background-image: url("images/Calgary_Skyline.jpg");
+}
+#stamps{
+    background-image: url("images/mcmahon_stadium.jpg");
+}
+#necks{
+    background-image: url("images/Roughnecks_bg.jpg");
 }
 header {
-    /*position: sticky;*/
-    width: 100%;
+    background-color: rgba(255, 0, 0, 0.5);
+    width: 99.85%;
     display: block;
     top: 0px;
-    /*margin: 4px;
-    padding: 5px;*/
+    font-size: large;
+    /*margin: 4px;*/
+    padding: 2px;
     min-height: 40px;
-    border: 1px solid #000000;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
     /*border-radius: 7pt;*/
     /*justify-content:center;*/
 }
-header table{
-    margin-left:auto;
-    margin-right:auto;
-}
 .main {
     display: flex;
-    align-items:flex-start;
     flex-direction: row;
     justify-content: space-around;
     margin: 1px;
-    width: 100%;
+    margin-left: 15%;
+    margin-right: 15%;
 }
 #top{
     justify-content:center;
@@ -32,7 +46,6 @@ header table{
 .child img {
     height:15vw;
     max-width: 100%;
-    max-height: 100%;
     margin-bottom:5%;
 }
 .small img{
@@ -40,20 +53,11 @@ header table{
     padding: 0px 10px 0px 10px;
 }
 .child {
+    min-width: 30%;
     margin-top: 4%;
-    width: 30%;
-    /*background: #ffffff;*/
-    flex-basis:20%;
-}
-aside img{
-    max-width:100%;
-    margin-top:0;
-}
-nav{
-    width:15%;
-}
-* {
-    background: #ffffff;
+    background: rgba(232, 232, 232, 0.8);
+    padding: 10px;
+    border-radius: 5px;
 }
 table{
     border-collapse:collapse;
@@ -69,13 +73,13 @@ a:link, a:visited{
     text-decoration:#000000;
     color:#000000;
 }
-a:hover{
+a:hover img{
     opacity: 1;
 }
 h1 a:hover{
-    border:dashed 1px #ff0000;
+    border: dashed 2px #ff0000;
 }
-a{
+a img{
     opacity:0.8;
 }
 li {

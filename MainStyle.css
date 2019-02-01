@@ -89,19 +89,17 @@ a img{
 li {
     margin-top:5px;
     border:groove;
-}
-span{
-    width:50%;
-    float:right;
+    text-align:left;
 }
 li u{
     float:left;
 }
-#prevGame {
+#game {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+    text-align:center;
 }
 #team{
     width:40%;

@@ -16,7 +16,7 @@
   <body>
     <div class="container">
       <div class="row">
-          <div class="col">Answer</div>
+          <div class="col-12" id="input" value=0>0</div>
       </div>
       <div class="row">
           <div class="col-3"><button class="btn btn-light btn-block">(</button></div>
@@ -34,7 +34,7 @@
             <div class="col-3"><button class="btn btn-light btn-block">4</button></div>
             <div class="col-3"><button class="btn btn-light btn-block">5</button></div>
             <div class="col-3"><button class="btn btn-light btn-block">6</button></div>
-            <div class="col-3"><button class="btn btn-secondary btn-block">X</button></div>
+            <div class="col-3"><button class="btn btn-secondary btn-block">*</button></div>
       </div>
       <div class="row">
             <div class="col-3"><button class="btn btn-light btn-block">1</button></div>
@@ -52,12 +52,50 @@
       </div>
 
     </div>
-
+    
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+    <script>
+      $(document).ready(function() {
+          $('button').on('click', function(e) {
+                console.log($("#input")[0].innerHTML);
+
+                let btn_press = e.target.innerHTML;
+
+                switch(btn_press){
+                        case '=':
+                              let answer = eval($("#input")[0].innerHTML);
+                              console.log(answer);
+                              $(input)[0].innerHTML = answer;
+                              break;
+                        case 'Clear':
+                              $(input)[0].innerHTML = 0;
+                              break;
+                        case 'Ans':
+                              //TODO
+                              break;
+                        default:
+                              if($(input)[0].innerHTML === "0"){
+                                    if(e.target.innerHTML === "."){
+                                          $("#input").append(e.target.innerHTML);
+                                          //We can append all operators actually
+                                    }
+                                    else{
+                                          $("#input")[0].innerHTML = (e.target.innerHTML);
+                                    }
+                              }
+                              else{
+                                    ///if ends with ) then add a *
+                                    $("#input").append(e.target.innerHTML);
+                              }
+                }
+          });
+      });
+      </script>
   </body>
 
 </html>

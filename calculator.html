@@ -10,18 +10,19 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="calc.css">
 
-    <title>Hello, world!</title>
+    <title>Math is the universal language</title>
   </head>
 
   <body>
     <div class="container">
-      <div class="row">
-          <div class="col-12" id="input" value=0>0</div>
+      <div class="row" id="screen">
+            <span id="Answer">#</span>
+            <div class="col-12" id="input">0</div>
       </div>
       <div class="row">
           <div class="col-3"><button class="btn btn-light btn-block">(</button></div>
           <div class="col-3"><button class="btn btn-light btn-block">)</button></div>
-          <div class="col-3"><button class="btn btn-outline-success btn-block" disabled>Ans</button></div>
+          <div class="col-3"><button class="btn btn-outline-warning btn-block">&larr;</button></div>
           <div class="col-3"><button class="btn btn-outline-danger btn-block">Clear</button></div>
       </div>
       <div class="row">
@@ -48,7 +49,8 @@
             <div class="col-3"><button class="btn btn-secondary btn-block">+</button></div>
       </div>
       <div class="row">
-            <div class="col-12"><button class="btn btn-primary btn-block">=</button></div>
+            <div class="col-3"><button id="answer" class="btn btn-outline-success btn-block" disabled>Ans</button></div>
+            <div class="col-9"><button class="btn btn-primary btn-block">=</button></div>
       </div>
 
     </div>
@@ -60,41 +62,87 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 
     <script>
+      function escapeRegExp(string) {
+            return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); // $& means the whole matched string
+      }
       $(document).ready(function() {
+            let answer = null;
+            let numbers = "1234567890";
           $('button').on('click', function(e) {
-                console.log($("#input")[0].innerHTML);
 
                 let btn_press = e.target.innerHTML;
+                let current_input = $("#input")[0].innerHTML;
+                let final_letter = current_input[current_input.length -1];
+                let btn_is_a_number = -1; //Not a number
+                try{
+                  btn_is_a_number = numbers.search(btn_press);
+                }
+                catch{
+                      btn_is_a_number = -1; //If there's an error it's not a number;
+                }
+                let final_letter_is_a_number = -1;
+                try{
+                  final_letter_is_a_number = numbers.search(final_letter);
+                }
+                catch{
+                      final_letter_is_a_number = -1; //If there's an error it's not a number;
+                }
+                //$("button").removeAttr("disabled");
+                if(answer != null){
+                      $("#answer").removeAttr("disabled")
+                }
+                /*if(final_letter === '('){
+                      final_letter = /\(/g;
+                }*/
+                console.log(current_input + " Length: " + current_input.length, " Final Letter: " + final_letter + " Answer: " + answer);
 
                 switch(btn_press){
                         case '=':
-                              let answer = eval($("#input")[0].innerHTML);
-                              console.log(answer);
-                              $(input)[0].innerHTML = answer;
-                              break;
+                              try{
+                                    answer = eval(current_input);
+                                    console.log(answer);
+                                    $("#input")[0].innerHTML = answer;
+                                    $("#Answer")[0].innerHTML = answer;
+                                    break;
+                              }
+                              catch{
+                                    $("#input")[0].innerHTML = "ERROR";
+                                    break;
+                              }
+                              
                         case 'Clear':
-                              $(input)[0].innerHTML = 0;
+                              $("#input")[0].innerHTML = 0;
+                              break;
+                        case "←":
+                              $("#input")[0].innerHTML = current_input.substring(0, current_input.length -1);
                               break;
                         case 'Ans':
-                              //TODO
+                              $("#input").append(answer);
                               break;
                         default:
-                              if($(input)[0].innerHTML === "0"){
-                                    if(e.target.innerHTML === "."){
-                                          $("#input").append(e.target.innerHTML);
-                                          //We can append all operators actually
-                                    }
-                                    else{
-                                          $("#input")[0].innerHTML = (e.target.innerHTML);
-                                    }
+                              if((current_input === "0" || current_input == "ERROR") && (btn_is_a_number != -1 || btn_press === "(")){
+                                          $("#input")[0].innerHTML = btn_press; //Can't use current_input cause it's a value not a pointer
+                              }
+                              else if(btn_press === "(" && (final_letter_is_a_number != -1 || final_letter ===")")){
+                                    $("#input").append("*");
+                                    $("#input").append(btn_press);
+                                    //Didn't put this in the switch statement becuse the 0 replacement needs to be evaluated first
                               }
                               else{
-                                    ///if ends with ) then add a *
-                                    $("#input").append(e.target.innerHTML);
+                                    if($("#input")[0].innerHTML.endsWith(")") && btn_is_a_number != -1){
+                                          $("#input").append("*");
+                                    }
+
+                                    $("#input").append(btn_press);
                               }
                 }
           });
       });
+      function endsWithAny(suffixes, string) {
+            return suffixes.some(function (suffix) {
+                   return string.endsWith(suffix);
+                  });
+      }
       </script>
   </body>
 

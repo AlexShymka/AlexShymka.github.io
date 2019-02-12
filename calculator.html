@@ -10,6 +10,8 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="calc.css">
 
+    <link rel="icon" href="images/pi.png">
+
     <title>Math is the universal language</title>
   </head>
 
@@ -49,7 +51,7 @@
             <div class="col-3"><button class="btn btn-secondary btn-block">+</button></div>
       </div>
       <div class="row">
-            <div class="col-3"><button id="answer" class="btn btn-outline-success btn-block" disabled>Ans</button></div>
+            <div class="col-3"><button id="answerbtn" class="btn btn-outline-success btn-block" disabled>Ans</button></div>
             <div class="col-9"><button class="btn btn-primary btn-block">=</button></div>
       </div>
 
@@ -87,13 +89,6 @@
                 catch{
                       final_letter_is_a_number = -1; //If there's an error it's not a number;
                 }
-                //$("button").removeAttr("disabled");
-                if(answer != null){
-                      $("#answer").removeAttr("disabled")
-                }
-                /*if(final_letter === '('){
-                      final_letter = /\(/g;
-                }*/
                 console.log(current_input + " Length: " + current_input.length, " Final Letter: " + final_letter + " Answer: " + answer);
 
                 switch(btn_press){
@@ -102,25 +97,32 @@
                                     answer = eval(current_input);
                                     console.log(answer);
                                     $("#input")[0].innerHTML = answer;
-                                    $("#Answer")[0].innerHTML = answer;
+                                    $("#Answer")[0].innerHTML = current_input + " = " + answer;
+                                    $("#answerbtn").removeAttr("disabled");
                                     break;
                               }
                               catch{
                                     $("#input")[0].innerHTML = "ERROR";
+                                    $("#Answer")[0].innerHTML = current_input + " = " + "ERROR";
+                                    $("#answerbtn").attr("disabled", "disabled");
                                     break;
                               }
+
                               
                         case 'Clear':
                               $("#input")[0].innerHTML = 0;
                               break;
                         case "←":
                               $("#input")[0].innerHTML = current_input.substring(0, current_input.length -1);
+                              if(current_input == "ERROR" || $("#input")[0].innerHTML.length == 0){
+                                    $("#input")[0].innerHTML = 0;
+                              }
                               break;
                         case 'Ans':
                               $("#input").append(answer);
                               break;
                         default:
-                              if((current_input === "0" || current_input == "ERROR") && (btn_is_a_number != -1 || btn_press === "(")){
+                              if((current_input === "0" || current_input == "ERROR") && (btn_is_a_number != -1 || btn_press === "(") && btn_press != "."){
                                           $("#input")[0].innerHTML = btn_press; //Can't use current_input cause it's a value not a pointer
                               }
                               else if(btn_press === "(" && (final_letter_is_a_number != -1 || final_letter ===")")){
@@ -131,6 +133,9 @@
                               else{
                                     if($("#input")[0].innerHTML.endsWith(")") && btn_is_a_number != -1){
                                           $("#input").append("*");
+                                    }
+                                    if (current_input == "ERROR"){
+                                          $("#input")[0].innerHTML = 0;
                                     }
 
                                     $("#input").append(btn_press);

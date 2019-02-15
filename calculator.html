@@ -79,14 +79,14 @@
                 try{
                   btn_is_a_number = numbers.search(btn_press);
                 }
-                catch{
+                catch(err){
                       btn_is_a_number = -1; //If there's an error it's not a number;
                 }
                 let final_letter_is_a_number = -1;
                 try{
                   final_letter_is_a_number = numbers.search(final_letter);
                 }
-                catch{
+                catch(err){
                       final_letter_is_a_number = -1; //If there's an error it's not a number;
                 }
                 console.log(current_input + " Length: " + current_input.length, " Final Letter: " + final_letter + " Answer: " + answer);
@@ -101,7 +101,7 @@
                                     $("#answerbtn").removeAttr("disabled");
                                     break;
                               }
-                              catch{
+                              catch(err){
                                     $("#input")[0].innerHTML = "ERROR";
                                     $("#Answer")[0].innerHTML = current_input + " = " + "ERROR";
                                     $("#answerbtn").attr("disabled", "disabled");
